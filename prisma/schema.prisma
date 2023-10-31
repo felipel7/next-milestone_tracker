@@ -22,5 +22,5 @@ model Goal {
 enum Status {
   OPEN
   IN_PROGRESS
-  ACHIVIED
+  ACHIEVED
 }

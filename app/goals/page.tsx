@@ -1,12 +1,16 @@
 import prisma from '@/prisma/client';
 import { Button, Table } from '@radix-ui/themes';
 import Link from 'next/link';
+import GoalStatusBadge from '../components/GoalStatusBadge';
 
 const GoalsPage = async () => {
   const goals = await prisma.goal.findMany();
 
   return (
     <div>
+      <Button className="mb-5">
+        <Link href="/goals/new">New Goal</Link>
+      </Button>
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -27,7 +31,7 @@ const GoalsPage = async () => {
                 <p className="block md:hidden">{goal.status}</p>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {goal.status}
+                <GoalStatusBadge status={goal.status} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {goal.createdAt.toDateString()}
@@ -36,9 +40,6 @@ const GoalsPage = async () => {
           ))}
         </Table.Body>
       </Table.Root>
-      <Button>
-        <Link href="/goals/new">New Goal</Link>
-      </Button>
     </div>
   );
 };
