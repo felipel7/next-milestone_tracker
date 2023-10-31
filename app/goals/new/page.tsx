@@ -1,22 +1,27 @@
 'use client';
 
-import { Button, Callout, TextField } from '@radix-ui/themes';
+import { createGoalSchema } from '@/app/validationSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Callout, Text, TextField } from '@radix-ui/themes';
 import axios from 'axios';
 import 'easymde/dist/easymde.min.css';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import SimpleMDE from 'react-simplemde-editor';
+import z from 'zod';
 
-interface GoalForm {
-  title: string;
-  description: string;
-}
+type GoalForm = z.infer<typeof createGoalSchema>;
 
 const NewGoalPage = () => {
   const [error, setError] = useState('');
   const router = useRouter();
-  const { handleSubmit, register, control } = useForm<GoalForm>();
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm<GoalForm>({ resolver: zodResolver(createGoalSchema) });
 
   const submitForm = async (data: GoalForm) => {
     try {
@@ -38,6 +43,12 @@ const NewGoalPage = () => {
         <TextField.Root>
           <TextField.Input {...register('title')} placeholder="Title" />
         </TextField.Root>
+        {errors.title && (
+          <Text as="p" color="ruby">
+            {errors.title.message}
+          </Text>
+        )}
+
         <Controller
           name="description"
           control={control}
@@ -45,6 +56,11 @@ const NewGoalPage = () => {
             <SimpleMDE placeholder="Description..." {...field} />
           )}
         />
+        {errors.description && (
+          <Text as="p" color="ruby">
+            {errors.description.message}
+          </Text>
+        )}
 
         <Button>Submit new goal</Button>
       </form>
