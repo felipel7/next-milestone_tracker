@@ -26,7 +26,7 @@ const GoalsPage = async () => {
           {goals?.map(goal => (
             <Table.Row key={goal.id}>
               <Table.Cell>
-                {goal.title}
+                <Link href={`/goals/${goal.id}`}>{goal.title}</Link>
                 <p className="block md:hidden">{goal.status}</p>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
