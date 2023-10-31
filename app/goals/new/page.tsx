@@ -1,9 +1,10 @@
 'use client';
 
 import ErrorMessage from '@/app/components/ErrorMessage';
+import Spinner from '@/app/components/Spinner';
 import { createGoalSchema } from '@/app/validationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Callout, Text, TextField } from '@radix-ui/themes';
+import { Button, Callout, TextField } from '@radix-ui/themes';
 import axios from 'axios';
 import 'easymde/dist/easymde.min.css';
 import { useRouter } from 'next/navigation';
@@ -15,6 +16,7 @@ import z from 'zod';
 type GoalForm = z.infer<typeof createGoalSchema>;
 
 const NewGoalPage = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
   const {
@@ -26,9 +28,11 @@ const NewGoalPage = () => {
 
   const submitForm = async (data: GoalForm) => {
     try {
+      setIsSubmitting(true);
       await axios.post('/api/goals', data);
       router.push('/goals');
     } catch (error) {
+      setIsSubmitting(false);
       setError('Something went wrong...');
     }
   };
@@ -55,7 +59,9 @@ const NewGoalPage = () => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-        <Button>Submit new goal</Button>
+        <Button disabled={isSubmitting}>
+          Submit new goal {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );
