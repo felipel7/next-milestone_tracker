@@ -1,4 +1,8 @@
+'use client';
+
+import classNames from 'classnames';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { GiTargetShot } from 'react-icons/gi';
 
 const links = [
@@ -7,6 +11,8 @@ const links = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   return (
     <nav className="flex items-center space-x-6 p-5 border-b">
       <Link href="/">
@@ -16,7 +22,11 @@ const Navbar = () => {
         {links.map(link => (
           <li
             key={link.label}
-            className="text-zinc-500 hover:text-zinc-800 transition-colors"
+            className={classNames({
+              'text-zinc-900': link.href === pathname,
+              'text-zinc-500': link.href !== pathname,
+              'hover:text-zinc-800 transition-colors': true,
+            })}
           >
             <Link href={link.href}>{link.label}</Link>
           </li>
