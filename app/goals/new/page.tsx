@@ -1,5 +1,6 @@
 'use client';
 
+import ErrorMessage from '@/app/components/ErrorMessage';
 import { createGoalSchema } from '@/app/validationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Callout, Text, TextField } from '@radix-ui/themes';
@@ -43,11 +44,7 @@ const NewGoalPage = () => {
         <TextField.Root>
           <TextField.Input {...register('title')} placeholder="Title" />
         </TextField.Root>
-        {errors.title && (
-          <Text as="p" color="ruby">
-            {errors.title.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
         <Controller
           name="description"
@@ -56,11 +53,7 @@ const NewGoalPage = () => {
             <SimpleMDE placeholder="Description..." {...field} />
           )}
         />
-        {errors.description && (
-          <Text as="p" color="ruby">
-            {errors.description.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
         <Button>Submit new goal</Button>
       </form>
