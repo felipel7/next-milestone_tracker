@@ -1,14 +1,13 @@
-import prisma from '@/prisma/client';
-import { Button, Table } from '@radix-ui/themes';
-import Link from 'next/link';
-import GoalStatusBadge from '../components/GoalStatusBadge';
+import { Table } from '@radix-ui/themes';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import GoalsActions from './GoalsActions';
 
-const GoalsPage = async () => {
-  const goals = await prisma.goal.findMany();
+const LoadingGoalsPage = () => {
+  const goals = [1, 2, 3, 4, 5];
 
   return (
-    <div>
+    <>
       <GoalsActions />
       <Table.Root variant="surface">
         <Table.Header>
@@ -24,23 +23,25 @@ const GoalsPage = async () => {
         </Table.Header>
         <Table.Body>
           {goals?.map(goal => (
-            <Table.Row key={goal.id}>
+            <Table.Row key={goal}>
               <Table.Cell>
-                {goal.title}
-                <p className="block md:hidden">{goal.status}</p>
+                <Skeleton />
+                <p className="block md:hidden">
+                  <Skeleton />
+                </p>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <GoalStatusBadge status={goal.status} />
+                <Skeleton />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {goal.createdAt.toDateString()}
+                <Skeleton />
               </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
       </Table.Root>
-    </div>
+    </>
   );
 };
 
-export default GoalsPage;
+export default LoadingGoalsPage;
