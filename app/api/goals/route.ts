@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   const validation = createGoalSchema.safeParse(body);
 
   if (!validation.success)
-    return NextResponse.json(validation.error.errors, { status: 400 });
+    return NextResponse.json(validation.error.format(), { status: 400 });
 
   const goal = await prisma.goal.create({
     data: { title: body.title, description: body.description },
