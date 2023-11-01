@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Goal" ALTER COLUMN "title" SET DATA TYPE VARCHAR(255);

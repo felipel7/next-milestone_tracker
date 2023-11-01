@@ -12,7 +12,7 @@ datasource db {
 
 model Goal {
   id          Int      @id @default(autoincrement())
-  title       String   @db.Char(255)
+  title       String   @db.VarChar(255)
   description String   @db.Text
   status      Status   @default(OPEN)
   createdAt   DateTime @default(now())
