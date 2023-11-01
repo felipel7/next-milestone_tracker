@@ -12,7 +12,7 @@ import classNames from 'classnames';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { GiTargetShot } from 'react-icons/gi';
+import { VscMilestone } from 'react-icons/vsc';
 import { Skeleton } from './components';
 
 const Navbar = () => {
@@ -20,9 +20,9 @@ const Navbar = () => {
     <nav className="border-b mb-5 px-5 py-4">
       <Container>
         <Flex justify="between">
-          <Flex align="center" gap="3">
+          <Flex align="center" gap="5">
             <Link href="/">
-              <GiTargetShot className="text-blue-500 text-2xl" />
+              <VscMilestone size={20} />
             </Link>
             <NavLinks />
           </Flex>
@@ -76,7 +76,7 @@ const NavLinks = () => {
 
   const links = [
     { label: 'Dashboard', href: '/' },
-    { label: 'Goals', href: '/goals/list' },
+    { label: 'Milestones', href: '/milestones/list' },
   ];
 
   return (
