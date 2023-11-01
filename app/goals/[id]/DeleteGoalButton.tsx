@@ -1,5 +1,6 @@
 'use client';
 
+import { Spinner } from '@/app/components';
 import { TrashIcon } from '@radix-ui/react-icons';
 import { AlertDialog, Button, Flex } from '@radix-ui/themes';
 import axios from 'axios';
@@ -8,14 +9,17 @@ import { useState } from 'react';
 
 const DeleteGoalButton = ({ goalId }: { goalId: number }) => {
   const [error, setError] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   const deleteGoal = async () => {
     try {
+      setIsDeleting(true);
       await axios.delete(`/api/goals/${goalId}`);
       router.push('/goals');
       router.refresh();
     } catch (error) {
+      setIsDeleting(false);
       setError(true);
     }
   };
@@ -24,9 +28,9 @@ const DeleteGoalButton = ({ goalId }: { goalId: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="ruby">
+          <Button color="ruby" disabled={isDeleting}>
             <TrashIcon />
-            Delete Goal
+            Delete Goal {isDeleting && <Spinner />}
           </Button>
         </AlertDialog.Trigger>
 
