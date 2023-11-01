@@ -56,6 +56,7 @@ const Navbar = () => {
                     src={session.user!.image!}
                     radius="full"
                     size="2"
+                    referrerPolicy="no-referrer"
                   />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content align="end">
