@@ -13,7 +13,7 @@ const GoalDetails = ({ goal }: { goal: Goal }) => {
 
       <Text>{goal.createdAt.toDateString()}</Text>
 
-      <Card className="prose" mt="4">
+      <Card className="prose max-w-full" mt="4">
         <ReactMarkdown>{goal.description}</ReactMarkdown>
       </Card>
     </>
