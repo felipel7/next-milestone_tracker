@@ -1,7 +1,7 @@
 'use client';
 
 import { ErrorMessage, Spinner } from '@/app/components';
-import { createGoalSchema } from '@/app/validationSchema';
+import { goalSchema } from '@/app/validationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Goal } from '@prisma/client';
 import { Button, Callout, TextField } from '@radix-ui/themes';
@@ -17,7 +17,7 @@ const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
   ssr: false,
 });
 
-type GoalFormData = z.infer<typeof createGoalSchema>;
+type GoalFormData = z.infer<typeof goalSchema>;
 
 const GoalForm = ({ goal }: { goal?: Goal }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,13 +28,17 @@ const GoalForm = ({ goal }: { goal?: Goal }) => {
     register,
     control,
     formState: { errors },
-  } = useForm<GoalFormData>({ resolver: zodResolver(createGoalSchema) });
+  } = useForm<GoalFormData>({ resolver: zodResolver(goalSchema) });
 
   const onSubmit = handleSubmit(async data => {
     try {
       setIsSubmitting(true);
-      await axios.post('/api/goals', data);
+
+      if (goal) await axios.patch(`/api/goals/${goal.id}`, data);
+      else await axios.post('/api/goals', data);
+
       router.push('/goals');
+      router.refresh();
     } catch (error) {
       setIsSubmitting(false);
       setError('An unexpected error ocurred.');
@@ -69,7 +73,8 @@ const GoalForm = ({ goal }: { goal?: Goal }) => {
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
         <Button disabled={isSubmitting}>
-          Submit new goal {isSubmitting && <Spinner />}
+          {goal ? 'Update Goal' : 'Submit new goal'}{' '}
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
