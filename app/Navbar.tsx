@@ -1,6 +1,8 @@
 'use client';
 
+import { Box } from '@radix-ui/themes';
 import classNames from 'classnames';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { GiTargetShot } from 'react-icons/gi';
@@ -12,6 +14,7 @@ const links = [
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { status, data: session } = useSession();
 
   return (
     <nav className="flex items-center space-x-6 p-5 border-b">
@@ -32,6 +35,14 @@ const Navbar = () => {
           </li>
         ))}
       </menu>
+
+      <Box>
+        {status === 'authenticated' ? (
+          <Link href="/api/auth/signout">Logout</Link>
+        ) : (
+          <Link href="/api/auth/signin">Login</Link>
+        )}
+      </Box>
     </nav>
   );
 };
