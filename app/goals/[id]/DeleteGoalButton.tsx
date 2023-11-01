@@ -2,8 +2,22 @@
 
 import { TrashIcon } from '@radix-ui/react-icons';
 import { AlertDialog, Button, Flex } from '@radix-ui/themes';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const DeleteGoalButton = ({ goalId }: { goalId: number }) => {
+  const router = useRouter();
+
+  const handleClick = async () => {
+    try {
+      await axios.delete(`/api/goals/${goalId}`);
+      router.push('/goals');
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
@@ -26,7 +40,7 @@ const DeleteGoalButton = ({ goalId }: { goalId: number }) => {
             </Button>
           </AlertDialog.Cancel>
 
-          <AlertDialog.Action>
+          <AlertDialog.Action onClick={handleClick}>
             <Button color="ruby">Delete Goal</Button>
           </AlertDialog.Action>
         </Flex>
