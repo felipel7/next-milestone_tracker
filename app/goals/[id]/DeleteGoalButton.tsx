@@ -16,7 +16,7 @@ const DeleteGoalButton = ({ goalId }: { goalId: number }) => {
     try {
       setIsDeleting(true);
       await axios.delete(`/api/goals/${goalId}`);
-      router.push('/goals');
+      router.push('/goals/list');
       router.refresh();
     } catch (error) {
       setIsDeleting(false);

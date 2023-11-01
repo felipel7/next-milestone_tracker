@@ -29,11 +29,9 @@ const GoalForm = ({ goal }: { goal?: Goal }) => {
   const onSubmit = handleSubmit(async data => {
     try {
       setIsSubmitting(true);
-
       if (goal) await axios.patch(`/api/goals/${goal.id}`, data);
       else await axios.post('/api/goals', data);
-
-      router.push('/goals');
+      router.push('/goals/list');
       router.refresh();
     } catch (error) {
       setIsSubmitting(false);

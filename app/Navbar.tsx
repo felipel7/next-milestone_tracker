@@ -7,7 +7,7 @@ import { GiTargetShot } from 'react-icons/gi';
 
 const links = [
   { label: 'Dashboard', href: '/' },
-  { label: 'Goals', href: '/goals' },
+  { label: 'Goals', href: '/goals/list' },
 ];
 
 const Navbar = () => {

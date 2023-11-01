@@ -1,6 +1,6 @@
 import prisma from '@/prisma/client';
 import { Table } from '@radix-ui/themes';
-import { GoalStatusBadge, Link } from '../components';
+import { GoalStatusBadge, Link } from '../../components';
 import GoalsActions from './GoalsActions';
 
 const GoalsPage = async () => {

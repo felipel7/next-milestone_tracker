@@ -6,7 +6,7 @@ const EditGoalButton = ({ goalId }: { goalId: number }) => {
   return (
     <Button>
       <Pencil2Icon />
-      <Link href={`/goals/${goalId}/edit`}>Editing Goal</Link>
+      <Link href={`/goals/edit/${goalId}`}>Editing Goal</Link>
     </Button>
   );
 };
