@@ -1,4 +1,6 @@
+import GoalStatusBadge from '@/app/components/GoalStatusBadge';
 import prisma from '@/prisma/client';
+import { Card, Flex, Heading, Text } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
 
 const GoalDetailsPage = async ({ params }: { params: { id: string } }) => {
@@ -11,16 +13,18 @@ const GoalDetailsPage = async ({ params }: { params: { id: string } }) => {
   if (!goal) notFound();
 
   return (
-    <dl>
-      <dt>Title</dt>
-      <dd>{goal.title}</dd>
-      <dt>Description</dt>
-      <dd>{goal.description}</dd>
-      <dt>Status</dt>
-      <dd>{goal.status}</dd>
-      <dt>created</dt>
-      <dd>{goal.createdAt.toDateString()}</dd>
-    </dl>
+    <div>
+      <Heading>{goal.title}</Heading>
+      <Flex gap="2" my="2">
+        <GoalStatusBadge status={goal.status} />
+      </Flex>
+
+      <Text>{goal.description}</Text>
+
+      <Card>
+        <p>{goal.createdAt.toDateString()}</p>
+      </Card>
+    </div>
   );
 };
 
