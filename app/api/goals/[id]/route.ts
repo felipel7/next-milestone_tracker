@@ -1,11 +1,16 @@
 import { goalSchema } from '@/app/validationSchema';
 import prisma from '@/prisma/client';
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import authOptions from '../../auth/authOptions';
 
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body = await req.json();
   const validation = goalSchema.safeParse(body);
 
@@ -38,6 +43,9 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const goal = await prisma.goal.findUnique({
     where: {
       id: parseInt(params.id),
