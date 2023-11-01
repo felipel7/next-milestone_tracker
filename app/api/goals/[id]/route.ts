@@ -33,3 +33,25 @@ export async function PATCH(
 
   return NextResponse.json(updatedGoal);
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const goal = await prisma.goal.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  if (!goal)
+    return NextResponse.json({ error: 'Invalid goal' }, { status: 404 });
+
+  await prisma.goal.delete({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  return NextResponse.json({});
+}
