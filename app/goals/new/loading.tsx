@@ -1,13 +1,3 @@
-import { Skeleton } from '@/app/components';
-import { Box } from '@radix-ui/themes';
+import GoalFormSkeleton from '../_components/GoalFormSkeleton';
 
-const LoadingNewGoalPage = () => {
-  return (
-    <Box className="max-w-lg">
-      <Skeleton />
-      <Skeleton height="20rem" />
-    </Box>
-  );
-};
-
-export default LoadingNewGoalPage;
+export default GoalFormSkeleton;
