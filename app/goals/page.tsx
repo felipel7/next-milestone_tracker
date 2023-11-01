@@ -1,6 +1,6 @@
+import Link from '@/app/components/Link';
 import prisma from '@/prisma/client';
-import { Button, Table } from '@radix-ui/themes';
-import Link from 'next/link';
+import { Table } from '@radix-ui/themes';
 import GoalStatusBadge from '../components/GoalStatusBadge';
 import GoalsActions from './GoalsActions';
 
