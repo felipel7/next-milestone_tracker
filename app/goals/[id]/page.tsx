@@ -3,6 +3,7 @@ import prisma from '@/prisma/client';
 import { Box, Flex, Grid } from '@radix-ui/themes';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
+import AssigneeSelect from './AssigneeSelect';
 import DeleteGoalButton from './DeleteGoalButton';
 import EditGoalButton from './EditGoalButton';
 import GoalDetails from './GoalDetails';
@@ -25,6 +26,7 @@ const GoalDetailsPage = async ({ params }: { params: { id: string } }) => {
       </Box>
       {session && (
         <Flex direction="column" gap="4">
+          <AssigneeSelect />
           <EditGoalButton goalId={goal.id} />
           <DeleteGoalButton goalId={goal.id} />
         </Flex>
