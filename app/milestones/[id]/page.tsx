@@ -26,7 +26,7 @@ const MilestoneDetailsPage = async ({ params }: { params: { id: string } }) => {
       </Box>
       {session && (
         <Flex direction="column" gap="4">
-          <AssigneeSelect />
+          <AssigneeSelect milestone={milestone} />
           <EditMilestoneButton milestoneId={milestone.id} />
           <DeleteMilestoneButton milestoneId={milestone.id} />
         </Flex>

@@ -1,12 +1,12 @@
 'use client';
 
 import { Skeleton } from '@/app/components';
-import { User } from '@prisma/client';
+import { Milestone, User } from '@prisma/client';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-const AssigneeSelect = () => {
+const AssigneeSelect = ({ milestone }: { milestone: Milestone }) => {
   const {
     data: users,
     isLoading,
@@ -23,11 +23,19 @@ const AssigneeSelect = () => {
   if (isLoading) return <Skeleton />;
 
   return (
-    <Select.Root>
+    <Select.Root
+      defaultValue={milestone.assignedToUserId || ''}
+      onValueChange={userId => {
+        axios.patch(`/api/milestones/${milestone.id}`, {
+          assignedToUserId: userId || null,
+        });
+      }}
+    >
       <Select.Trigger placeholder="Assign..." />
       <Select.Content>
         <Select.Group>
           <Select.Label>Suggestions</Select.Label>
+          <Select.Item value="">Unassigned</Select.Item>
           {users?.map(user => (
             <Select.Item key={user.id} value={user.id}>
               {user.name}
