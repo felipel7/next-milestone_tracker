@@ -1,10 +1,22 @@
 import prisma from '@/prisma/client';
+import { Status } from '@prisma/client';
 import { Table } from '@radix-ui/themes';
 import { Link, MilestoneStatusBadge } from '../../components';
 import MilestoneActions from './MilestoneActions';
 
-const MilestonePage = async () => {
-  const milestones = await prisma.milestone.findMany();
+interface Props {
+  searchParams: {
+    status: Status;
+  };
+}
+
+const MilestonePage = async ({ searchParams }: Props) => {
+  const statuses = Object.values(Status);
+  const status = statuses.includes(searchParams.status)
+    ? searchParams.status
+    : undefined;
+
+  const milestones = await prisma.milestone.findMany({ where: { status } });
 
   return (
     <div>
