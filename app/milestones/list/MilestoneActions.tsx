@@ -1,13 +1,15 @@
-import { Button } from '@radix-ui/themes';
+import { Button, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
+import MilestoneStatusFilter from './MilestoneStatusFilter';
 
 const MilestoneActions = () => {
   return (
-    <div className="mb-5">
+    <Flex mb="5" justify="between">
+      <MilestoneStatusFilter />
       <Button>
         <Link href="/milestones/new">New Milestone</Link>
       </Button>
-    </div>
+    </Flex>
   );
 };
 
