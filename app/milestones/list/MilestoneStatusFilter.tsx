@@ -23,7 +23,7 @@ const MilestoneStatusFilter = () => {
         const orderBy = searchParams.get('orderBy');
 
         if (status) params.append('status', status);
-        if (orderBy) params.append('orderby', orderBy);
+        if (orderBy) params.append('orderBy', orderBy);
 
         const query = params.size ? `?${params.toString()}` : '';
 

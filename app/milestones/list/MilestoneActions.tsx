@@ -4,7 +4,7 @@ import MilestoneStatusFilter from './MilestoneStatusFilter';
 
 const MilestoneActions = () => {
   return (
-    <Flex mb="5" justify="between">
+    <Flex justify="between">
       <MilestoneStatusFilter />
       <Button>
         <Link href="/milestones/new">New Milestone</Link>
