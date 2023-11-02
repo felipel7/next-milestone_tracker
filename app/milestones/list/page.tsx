@@ -26,7 +26,16 @@ const MilestonePage = async ({ searchParams }: Props) => {
     ? searchParams.status
     : undefined;
 
-  const milestones = await prisma.milestone.findMany({ where: { status } });
+  const orderBy = columns
+    .map(column => column.value)
+    .includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: 'asc' }
+    : undefined;
+
+  const milestones = await prisma.milestone.findMany({
+    where: { status },
+    orderBy,
+  });
 
   return (
     <div>
