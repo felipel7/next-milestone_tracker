@@ -1,6 +1,7 @@
 import prisma from '@/prisma/client';
 import LatestsMilestones from './LatestsMilestones';
 import MilestoneSummary from './MilestoneSummary';
+import MilestoneChart from './MilestoneChart';
 
 export default async function Home() {
   const open = await prisma.milestone.count({ where: { status: 'OPEN' } });
@@ -19,6 +20,7 @@ export default async function Home() {
         inProgress={inProgress}
         open={open}
       />
+      <MilestoneChart achieved={achieved} inProgress={inProgress} open={open} />
     </section>
   );
 }
