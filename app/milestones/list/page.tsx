@@ -1,3 +1,4 @@
+import Pagination from '@/app/components/Pagination';
 import prisma from '@/prisma/client';
 import { Milestone, Status } from '@prisma/client';
 import { ArrowUpIcon } from '@radix-ui/react-icons';
@@ -10,6 +11,7 @@ interface Props {
   searchParams: {
     status: Status;
     orderBy: keyof Milestone;
+    page: string;
   };
 }
 
@@ -31,11 +33,19 @@ const MilestonePage = async ({ searchParams }: Props) => {
     .includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: 'asc' }
     : undefined;
+  const where = { status };
+
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 10;
 
   const milestones = await prisma.milestone.findMany({
-    where: { status },
+    where,
     orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
   });
+
+  const milestoneCount = await prisma.milestone.count({ where });
 
   return (
     <div>
@@ -84,6 +94,11 @@ const MilestonePage = async ({ searchParams }: Props) => {
           ))}
         </Table.Body>
       </Table.Root>
+      <Pagination
+        currentPage={page}
+        itemCount={milestoneCount}
+        pageSize={pageSize}
+      />
     </div>
   );
 };
