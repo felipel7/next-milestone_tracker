@@ -1,7 +1,8 @@
 import prisma from '@/prisma/client';
+import { Flex, Grid } from '@radix-ui/themes';
 import LatestsMilestones from './LatestsMilestones';
-import MilestoneSummary from './MilestoneSummary';
 import MilestoneChart from './MilestoneChart';
+import MilestoneSummary from './MilestoneSummary';
 
 export default async function Home() {
   const open = await prisma.milestone.count({ where: { status: 'OPEN' } });
@@ -13,14 +14,20 @@ export default async function Home() {
   });
 
   return (
-    <section>
+    <Grid columns={{ initial: '1', md: '2' }} gap="5">
+      <Flex direction="column" gap="5">
+        <MilestoneSummary
+          achieved={achieved}
+          inProgress={inProgress}
+          open={open}
+        />
+        <MilestoneChart
+          achieved={achieved}
+          inProgress={inProgress}
+          open={open}
+        />
+      </Flex>
       <LatestsMilestones />
-      <MilestoneSummary
-        achieved={achieved}
-        inProgress={inProgress}
-        open={open}
-      />
-      <MilestoneChart achieved={achieved} inProgress={inProgress} open={open} />
-    </section>
+    </Grid>
   );
 }

@@ -20,12 +20,12 @@ const MilestoneSummary = ({ open, inProgress, achieved }: Props) => {
   ];
 
   return (
-    <Flex gap="4">
+    <Flex gap="4" wrap={{ initial: 'wrap', sm: 'nowrap' }}>
       {containers.map(container => (
-        <Card key={container.label}>
+        <Card key={container.label} className="w-full whitespace-nowrap">
           <Flex direction="column" gap="1">
             <Link
-              href={`/milestones/list?status${container.status}`}
+              href={`/milestones/list?status=${container.status}`}
               className="text-sm font-medium"
             >
               {container.label}
