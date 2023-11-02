@@ -1,4 +1,4 @@
-import { mileStoneSchema } from '@/app/validationSchema';
+import { patchMileStoneSchema } from '@/app/validationSchema';
 import prisma from '@/prisma/client';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   if (!session) return NextResponse.json({}, { status: 401 });
 
   const body = await req.json();
-  const validation = mileStoneSchema.safeParse(body);
+  const validation = patchMileStoneSchema.safeParse(body);
 
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });

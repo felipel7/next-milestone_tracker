@@ -9,7 +9,7 @@ import {
   Text,
 } from '@radix-ui/themes';
 import classNames from 'classnames';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { VscMilestone } from 'react-icons/vsc';
@@ -62,8 +62,11 @@ const AuthStatus = () => {
           <DropdownMenu.Label>
             <Text size="2">{session!.user!.email}</Text>
           </DropdownMenu.Label>
-          <DropdownMenu.Item>
-            <Link href="/api/auth/signout">Logout</Link>
+          <DropdownMenu.Item
+            className="cursor-pointer"
+            onClick={() => signOut({ callbackUrl: '/' })}
+          >
+            Logout
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>

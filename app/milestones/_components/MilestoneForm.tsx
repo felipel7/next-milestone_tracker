@@ -1,7 +1,7 @@
 'use client';
 
 import { ErrorMessage, Spinner } from '@/app/components';
-import { mileStoneSchema } from '@/app/validationSchema';
+import { patchMileStoneSchema } from '@/app/validationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Milestone } from '@prisma/client';
 import { Button, Callout, TextField } from '@radix-ui/themes';
@@ -13,7 +13,7 @@ import { Controller, useForm } from 'react-hook-form';
 import SimpleMDE from 'react-simplemde-editor';
 import z from 'zod';
 
-type MilestoneFormData = z.infer<typeof mileStoneSchema>;
+type MilestoneFormData = z.infer<typeof patchMileStoneSchema>;
 
 const MilestoneForm = ({ milestone }: { milestone?: Milestone }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,7 +24,9 @@ const MilestoneForm = ({ milestone }: { milestone?: Milestone }) => {
     register,
     control,
     formState: { errors },
-  } = useForm<MilestoneFormData>({ resolver: zodResolver(mileStoneSchema) });
+  } = useForm<MilestoneFormData>({
+    resolver: zodResolver(patchMileStoneSchema),
+  });
 
   const onSubmit = handleSubmit(async data => {
     try {
