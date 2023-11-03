@@ -37,4 +37,15 @@ const MilestoneDetailsPage = async ({ params }: { params: { id: string } }) => {
   );
 };
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const milestone = await prisma.milestone.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  return {
+    title: `Milestone - ${milestone?.title}`,
+    description: `Details of the milestone: ${milestone?.title}`,
+  };
+}
+
 export default MilestoneDetailsPage;

@@ -23,4 +23,15 @@ const EditMilestonePage = async ({ params }: { params: { id: string } }) => {
   return <MilestoneForm milestone={milestone} />;
 };
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const milestone = await prisma.milestone.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  return {
+    title: `Edit Milestone - ${milestone?.title}`,
+    description: `Modify details for the milestone: ${milestone?.title}`,
+  };
+}
+
 export default EditMilestonePage;

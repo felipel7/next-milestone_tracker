@@ -3,6 +3,7 @@ import Pagination from '@/app/components/Pagination';
 import prisma from '@/prisma/client';
 import { Status } from '@prisma/client';
 import { Flex, Text } from '@radix-ui/themes';
+import { Metadata } from 'next';
 import MilestoneActions from './MilestoneActions';
 import MilestoneTable, { MilestoneQuery, columnsName } from './MilestoneTable';
 
@@ -65,5 +66,10 @@ const NoResultsMessage = () => (
 );
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Milestone Tracker - List',
+  description: 'View all project milestones',
+};
 
 export default MilestonePage;

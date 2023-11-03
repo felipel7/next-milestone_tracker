@@ -1,5 +1,6 @@
 import prisma from '@/prisma/client';
 import { Flex, Grid } from '@radix-ui/themes';
+import { Metadata } from 'next';
 import LatestsMilestones from './LatestsMilestones';
 import MilestoneChart from './MilestoneChart';
 import MilestoneSummary from './MilestoneSummary';
@@ -31,3 +32,8 @@ export default async function Home() {
     </Grid>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Milestone Tracker - Dashboard',
+  description: 'View a summary of project milestones',
+};
