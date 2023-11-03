@@ -37,3 +37,5 @@ export const metadata: Metadata = {
   title: 'Milestone Tracker - Dashboard',
   description: 'View a summary of project milestones',
 };
+
+export const dynamic = 'force-dynamic';
