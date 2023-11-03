@@ -12,7 +12,7 @@ import classNames from 'classnames';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { VscMilestone } from 'react-icons/vsc';
+import { GoGoal } from 'react-icons/go';
 import { Skeleton } from './components';
 
 const Navbar = () => {
@@ -22,7 +22,7 @@ const Navbar = () => {
         <Flex justify="between">
           <Flex align="center" gap="5">
             <Link href="/">
-              <VscMilestone size={20} />
+              <GoGoal size={20} style={{ color: 'var(--accent-9)' }} />
             </Link>
             <NavLinks />
           </Flex>
