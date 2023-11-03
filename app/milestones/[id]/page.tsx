@@ -3,20 +3,25 @@ import prisma from '@/prisma/client';
 import { Box, Flex, Grid } from '@radix-ui/themes';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 import AssigneeSelect from './AssigneeSelect';
 import DeleteMilestoneButton from './DeleteMilestoneButton';
 import EditMilestoneButton from './EditMilestoneButton';
 import MilestoneDetails from './MilestoneDetails';
 import StatusSelect from './StatusSelect';
 
+const fetchMilestone = cache((milestoneId: number) =>
+  prisma.milestone.findUnique({
+    where: {
+      id: milestoneId,
+    },
+  })
+);
+
 const MilestoneDetailsPage = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions);
 
-  const milestone = await prisma.milestone.findUnique({
-    where: {
-      id: parseInt(params.id),
-    },
-  });
+  const milestone = await fetchMilestone(parseInt(params.id));
 
   if (!milestone) notFound();
 
@@ -38,9 +43,7 @@ const MilestoneDetailsPage = async ({ params }: { params: { id: string } }) => {
 };
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const milestone = await prisma.milestone.findUnique({
-    where: { id: parseInt(params.id) },
-  });
+  const milestone = await fetchMilestone(parseInt(params.id));
 
   return {
     title: `Milestone - ${milestone?.title}`,
