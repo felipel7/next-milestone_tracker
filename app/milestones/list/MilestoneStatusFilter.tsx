@@ -3,6 +3,7 @@
 import { Status } from '@prisma/client';
 import { Select } from '@radix-ui/themes';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const statuses: { label: string; value?: Status }[] = [
   { label: 'All' },
@@ -14,10 +15,15 @@ const statuses: { label: string; value?: Status }[] = [
 const MilestoneStatusFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [status, setStatus] = useState(searchParams.get('status') || '');
+
+  useEffect(() => {
+    setStatus(searchParams.get('status') || '');
+  }, [searchParams]);
 
   return (
     <Select.Root
-      defaultValue={searchParams.get('status') || ''}
+      value={status}
       onValueChange={status => {
         const params = new URLSearchParams();
         const orderBy = searchParams.get('orderBy');

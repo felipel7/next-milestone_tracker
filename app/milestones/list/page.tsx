@@ -1,9 +1,10 @@
+import { AddNewMilestoneSuggestion, Link } from '@/app/components';
 import Pagination from '@/app/components/Pagination';
 import prisma from '@/prisma/client';
 import { Status } from '@prisma/client';
+import { Flex, Text } from '@radix-ui/themes';
 import MilestoneActions from './MilestoneActions';
 import MilestoneTable, { MilestoneQuery, columnsName } from './MilestoneTable';
-import { Flex } from '@radix-ui/themes';
 
 interface Props {
   searchParams: MilestoneQuery;
@@ -33,12 +34,20 @@ const MilestonePage = async ({ searchParams }: Props) => {
     take: pageSize,
   });
 
+  const totalMilestones = await prisma.milestone.count();
+  if (totalMilestones === 0) return <AddNewMilestoneSuggestion />;
+
   const milestoneCount = await prisma.milestone.count({ where });
+  const noResultsWithFilters = milestoneCount === 0;
 
   return (
     <Flex direction="column" gap="3">
       <MilestoneActions />
-      <MilestoneTable milestones={milestones} searchParams={searchParams} />
+      {noResultsWithFilters ? (
+        <NoResultsMessage />
+      ) : (
+        <MilestoneTable milestones={milestones} searchParams={searchParams} />
+      )}
       <Pagination
         currentPage={page}
         itemCount={milestoneCount}
@@ -47,6 +56,13 @@ const MilestonePage = async ({ searchParams }: Props) => {
     </Flex>
   );
 };
+
+const NoResultsMessage = () => (
+  <Flex align="center" gap="3" py="3">
+    <Text>No results found for the current search.</Text>
+    <Link href="/milestones/list">Clear filters</Link>
+  </Flex>
+);
 
 export const dynamic = 'force-dynamic';
 
