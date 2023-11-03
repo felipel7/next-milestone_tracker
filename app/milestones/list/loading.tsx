@@ -8,7 +8,7 @@ const LoadingMilestonesPage = () => {
   return (
     <>
       <MilestoneActions />
-      <Table.Root variant="surface">
+      <Table.Root variant="surface" mt="5">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>Milestone</Table.ColumnHeaderCell>
