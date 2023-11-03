@@ -7,6 +7,7 @@ import AssigneeSelect from './AssigneeSelect';
 import DeleteMilestoneButton from './DeleteMilestoneButton';
 import EditMilestoneButton from './EditMilestoneButton';
 import MilestoneDetails from './MilestoneDetails';
+import StatusSelect from './StatusSelect';
 
 const MilestoneDetailsPage = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions);
@@ -27,6 +28,7 @@ const MilestoneDetailsPage = async ({ params }: { params: { id: string } }) => {
       {session && (
         <Flex direction="column" gap="4">
           <AssigneeSelect milestone={milestone} />
+          <StatusSelect milestone={milestone} />
           <EditMilestoneButton milestoneId={milestone.id} />
           <DeleteMilestoneButton milestoneId={milestone.id} />
         </Flex>

@@ -1,3 +1,4 @@
+import { Status } from '@prisma/client';
 import z from 'zod';
 
 export const patchMileStoneSchema = z.object({
@@ -9,4 +10,5 @@ export const patchMileStoneSchema = z.object({
     .max(255)
     .optional()
     .nullable(),
+  status: z.enum([Status.OPEN, Status.IN_PROGRESS, Status.ACHIEVED]).optional(),
 });

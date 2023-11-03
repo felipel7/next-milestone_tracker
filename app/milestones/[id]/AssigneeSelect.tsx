@@ -32,7 +32,7 @@ const AssigneeSelect = ({ milestone }: { milestone: Milestone }) => {
         onValueChange={assignMilestone}
       >
         <Select.Trigger placeholder="Assign..." />
-        <Select.Content>
+        <Select.Content position="popper">
           <Select.Group>
             <Select.Label>Suggestions</Select.Label>
             <Select.Item value="">Unassigned</Select.Item>
